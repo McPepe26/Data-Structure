@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -12,7 +13,18 @@ code {
     monospace;
 }
 
-text-white{
-  color:#fff;
+.sticky-footer {
+  position: absolute; 
+  bottom: 0;
 }
+
+.sidebar-themes {
+  width: 0;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+
 

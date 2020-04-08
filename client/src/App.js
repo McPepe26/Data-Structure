@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainPage from './Pages/MainPage';
 import SignIn from './Pages/SignIn';
@@ -10,9 +10,19 @@ import Footer from './Components/Footer';
 
 function App() {
 	const [mainIsActive, setMainIsActive] = useState(true);
+	const [property, setProperty] = useState('');
+	// eslint-disable-next-line
+    useEffect(() => {
+        let height = (document.body.clientHeight);
+        let heightWindow = window.innerHeight;
+        if(heightWindow > height)
+			setProperty("sticki-footer");
+	});
+	
 	return (
 		<Router>
 			<NavBar
+				setProperty={setProperty}
 				mainIsActive={mainIsActive}
 				setMainIsActive={setMainIsActive}
 			/>
@@ -27,7 +37,9 @@ function App() {
 				<Route exact path="/themes" component={Themes}/>
 				<Route component={NotFound}/>
 			</Switch>
-			<Footer/>
+			<Footer
+				property={property}
+			/>
 		</Router>
 	);
 }

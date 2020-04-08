@@ -32,12 +32,18 @@ const MainPage = ({setMainIsActive}) => {
                         </Link>
                     </div>
                     <div className="col-4">
-                        <Link className="btn btn-primary btn-block" to="/signin">
+                        <Link 
+                            className="btn btn-primary btn-block" to="/signin"
+                            onClick={() =>{setMainIsActive(false)}}
+                        >
                             <span className="h5">Iniciar Sesión</span>
                         </Link>
                     </div>
                     <div className="col-4">
-                        <Link className="btn btn-primary btn-block" to="/signup">
+                        <Link 
+                            className="btn btn-primary btn-block" to="/signup"
+                            onClick={() =>{setMainIsActive(false)}}
+                        >
                             <span className="h5">Registrarse</span>
                         </Link>
                     </div>
