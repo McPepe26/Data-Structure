@@ -9,12 +9,19 @@ import SignUp from './Pages/SignUp';
 import Footer from './Components/Footer';
 
 function App() {
-	
+	const [mainIsActive, setMainIsActive] = useState(true);
 	return (
 		<Router>
-			<NavBar/>
+			<NavBar
+				mainIsActive={mainIsActive}
+				setMainIsActive={setMainIsActive}
+			/>
 			<Switch>
-				<Route exact path="/" component={MainPage}/>
+				<Route exact path="/">
+					<MainPage
+						setMainIsActive={setMainIsActive}
+					/>
+				</Route>
 				<Route exact path="/signin" component={SignIn}/>
 				<Route exact path="/signup" component={SignUp}/>
 				<Route exact path="/themes" component={Themes}/>
