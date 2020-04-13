@@ -26,5 +26,24 @@ a:hover{
   text-decoration: none;
 }
 
+.transition-class{
+  transition-duration: .2s;
+}
+
+.text-size-big{
+  font-size: 230px;;
+}
+
+.text-size-medium{
+  font-size: 115px;;
+}
+
+.sticky {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: auto
+}
+
 
 

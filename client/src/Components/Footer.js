@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const FooterContainer = styled.footer`
     display: block;
     width: 100%;
-    padding: 30px 50px;
+    padding: 20px 60px;
 `;
 
 const Footer = ({property}) => {

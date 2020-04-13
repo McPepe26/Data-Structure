@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {useSpring, animated} from 'react-spring'
+import Theme from './Theme';
 
     const Content = styled.div`
         overflow: hidden;
-        width: 100%;
-        height: 100%;
     `;
 
     const Bar = styled.div`
@@ -29,8 +28,9 @@ import {useSpring, animated} from 'react-spring'
 
     const Menu = styled.div`
         height: 100%;
+        width: 0;
         position: fixed;
-        z-index: 1;
+        z-index: 9999;
         top: 0;
         left: 0;
         background-color: #111;
@@ -121,81 +121,117 @@ import {useSpring, animated} from 'react-spring'
         }
     `;
 
-const Themes = () => {
-    const props = useSpring({opacity: 1, from: {opacity: 0}})
-    const [showMenu, setShowMenu] = useState(false);
+    const Icon = styled.div`
+        width: 345px;
+        margin-right:auto;
+        margin-left:auto;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+    `;
+
+const Themes = ({theme, setProperty, setMainIsActive}) => {
+    const props = useSpring({opacity: 1, from: {opacity: 0}});
+
+    useEffect(() => {
+        setMainIsActive(false);
+        let height = (document.body.clientHeight);
+		let heightWindow = window.innerHeight;
+		console.log(height, heightWindow, (heightWindow > height));
+        if(heightWindow > height)
+			setProperty("sticky-footer");
+	});
 
     const openSlideMenu = (e) => {
         e.preventDefault();
-        setShowMenu(true);
+
+        let menu = document.getElementById('idMenu');
+        let submenu = document.getElementById('submenu');
+        menu.style.width = `${submenu.clientWidth+30}px`;
+        menu.style.paddingLeft = `10px`;
+        menu.style.paddingRight = `10px`;
+        menu.style.paddingBottom = `50px`;
+
     }
+
     const closeSlideMenu = (e) => {
         e.preventDefault();
-        setShowMenu(false);
+        let menu = document.getElementById('idMenu');
+        menu.style.width = `0`;
+        menu.style.paddingLeft = `0`;
+        menu.style.paddingRight = `0`;
     }
     
     return (
-        <Content>
-            <Bar className="bg-primary">
-                <OpenButton 
-                    href="/#"
-                    onClick={openSlideMenu}
-                >
-                    <i className="fas fa-bars"></i>
-                </OpenButton>
-            </Bar>
-            {showMenu ? 
-                <animated.div style={props}>
-                    <Menu>
-                        <CloseButton 
-                            href="#"
-                            onClick={closeSlideMenu}
-                        >
-                            <i className="fas fa-times"></i>
-                        </CloseButton>
-                        <SubMenu>
-                            <ItemContainer id="List1">
-                                <ItemMenu 
-                                    href="#List1"
-                                >Item 1</ItemMenu>
-                                <SubListMenu>
-                                    <SubItem
-                                        href="/#"
-                                    >
-                                        Sub Item 1
-                                    </SubItem>
-                                    <SubItem
-                                        href="/#"
-                                    >
-                                        Sub Item 2
-                                    </SubItem>
-                                </SubListMenu>
-                            </ItemContainer>
-                            <ItemContainer id="List2">
-                                <ItemMenu
-                                    href="#List2"
-                                >Item 2</ItemMenu>
-                                <SubListMenu>
-                                    <SubItem
-                                        href="/#"
-                                    >
-                                        Sub Item 1
-                                    </SubItem>
-                                    <SubItem
-                                        href="/#"
-                                    >
-                                        Sub Item 2
-                                    </SubItem>
-                                </SubListMenu>
-                            </ItemContainer>
-                        </SubMenu>
-                    </Menu>
-                </animated.div>
-            :
-                null
-            }
-        </Content>
-        
+        <animated.div className="transition-class" style={props}>
+            <Content>
+                <div className="row">
+                    {theme ? 
+                        <Theme/>
+                    :
+                        <div className="col-4 mx-auto text-center pt-3">
+                            <Icon className="text-size-big bg-primary text-white"><i className="fas fa-file-alt"></i></Icon>
+                            <h3 className="">Despliega el menú lateral para ver los temas disponibles</h3>
+                        </div>
+                    }
+                    <div className="ml-1 sticky">
+                        <Bar className="bg-primary">
+                            <OpenButton 
+                                href="/#"
+                                onClick={openSlideMenu}
+                            >
+                                <i className="fas fa-bars"></i>
+                            </OpenButton>
+                        </Bar>
+                            
+                        <Menu id="idMenu">
+                            <CloseButton 
+                                href="#"
+                                onClick={closeSlideMenu}
+                            >
+                                <i className="fas fa-times"></i>
+                            </CloseButton>
+                            <SubMenu id="submenu">
+                                <ItemContainer id="List1">
+                                    <ItemMenu 
+                                        href="#List1"
+                                    >Item 1</ItemMenu>
+                                    <SubListMenu>
+                                        <SubItem
+                                            href="/theme/1"
+                                        >
+                                            Sub Item 1
+                                        </SubItem>
+                                        <SubItem
+                                            href="/theme/2"
+                                        >
+                                            Sub Item 2
+                                        </SubItem>
+                                    </SubListMenu>
+                                </ItemContainer>
+                                <ItemContainer id="List2">
+                                    <ItemMenu
+                                        href="#List2"
+                                    >Item 2</ItemMenu>
+                                    <SubListMenu>
+                                        <SubItem
+                                            href="/theme/3"
+                                        >
+                                            Sub Item 1
+                                        </SubItem>
+                                        <SubItem
+                                            href="/theme/4"
+                                        >
+                                            Sub Item 2
+                                        </SubItem>
+                                    </SubListMenu>
+                                </ItemContainer>
+                            </SubMenu>
+                        </Menu>
+                    </div>
+                </div>
+            </Content>
+        </animated.div>
     );
 }
  

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {useSpring, animated} from 'react-spring'
 import Card from '../Components/Card';
 
 const Header = styled.div`
@@ -12,8 +13,10 @@ const Header = styled.div`
 
 
 const MainPage = ({setMainIsActive}) => {
+    const props = useSpring({opacity: 1, from: {opacity: 0}})
+
     return (
-        <Fragment>
+        <animated.div className="transition-class" style={props}>
             <Header className="bg-primary text-white">
                 <h1>¡Bienvenido!</h1>
                 <p className="lead text-white pt-3">
@@ -61,7 +64,7 @@ const MainPage = ({setMainIsActive}) => {
                     </div>
                 </div>
             </div>
-        </Fragment>
+            </animated.div>
     );
 }
  
