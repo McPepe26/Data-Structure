@@ -1,29 +1,19 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {useSpring, animated} from 'react-spring'
 import Card from '../Components/Card';
-
-const Header = styled.div`
-    display: block;
-    padding: 100px 20px;
-    width: 100%;
-    text-align: center;
-`;
+import Header from '../Components/Header';
 
 
 const MainPage = ({setMainIsActive}) => {
-    const props = useSpring({opacity: 1, from: {opacity: 0}})
+    const props = useSpring({opacity: 1, from: {opacity: 0}});
 
     return (
         <animated.div className="transition-class" style={props}>
-            <Header className="bg-primary text-white">
-                <h1>¡Bienvenido!</h1>
-                <p className="lead text-white pt-3">
-                    Estructuras de datos Online es la página web de apuntes de estructura de datos con animaciones fáciles de comprender
-                </p>
-            </Header>
-
+            <Header 
+                title="¡Bienvenido!" 
+                subtitle="Estructuras de datos Online es la página web de apuntes de estructura de datos con animaciones fáciles de comprender"
+            />
             <div className="container pt-5 mb-3">
                 <div className="row">
                     <div className="col-4">

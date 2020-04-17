@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "1",
+        "code": "codegroup1",
+        "groupName": "Grupo 1",
+        "public": true
+    },
+    {
+        "_id": "6",
+        "code": "codegroup6",
+        "groupName": "Grupo 6",
+        "public": true
+    }
+]

@@ -42,8 +42,26 @@ a:hover{
   position: fixed;
   z-index: 999;
   top: 0;
+  left:0;
   width: auto
 }
 
-
+.group-enter,
+.test-enter {
+  opacity: 0;
+}
+.group-enter-active,
+.test-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.group-exit,
+.test-exit {
+  opacity: 1;
+}
+.group-exit-active,
+.test-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
 

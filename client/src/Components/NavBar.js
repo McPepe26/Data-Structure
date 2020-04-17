@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useContext, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../Context/User/UserContext';
+import { calcPositionFooter } from '../Helpers/FooterHelpers';
 
-const NavBar = ({setProperty, mainIsActive, setMainIsActive}) => {
-    
+const NavBar = ({mainIsActive, setMainIsActive}) => {
+
+    //User Context 
+    const userContext = useContext(UserContext);
+    const { isLogged, user } = userContext;
+    const { name } = user;
+
     const changeLinkActive = (isMain) => {
         setMainIsActive(isMain);
-        setProperty('');
+        calcPositionFooter();
+    }
+
+    const onHandleClickLinkMenu = () => {
+        let menu = document.getElementById('userMenu');
+        let button = document.getElementById('userButton');
+        let container = document.getElementById('userMenuContainer');
+        menu.classList.toggle('show');
+        container.classList.toggle('show');
+        button.blur();
+    }
+
+    //CLick on user button
+    const onHandleClickShowUser = (e) => {
+        e.preventDefault();
+        onHandleClickLinkMenu();
     }
 
     return (
@@ -21,7 +43,7 @@ const NavBar = ({setProperty, mainIsActive, setMainIsActive}) => {
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <Link 
-                                    className={`nav-link ${mainIsActive ? 'active' : ''}`} to="/"
+                                    className={`nav-link ${mainIsActive ? 'active' : ''}`} to={isLogged ? '/groups' : '/'}
                                     onClick={() =>{changeLinkActive(true)}}
                                 ><span className="h6">Inicio</span></Link>
                             </li>
@@ -33,18 +55,55 @@ const NavBar = ({setProperty, mainIsActive, setMainIsActive}) => {
                             </li>
                         </ul>
                         <div className="d-inline my-2 my-lg-0 mr-3">
-                            <Link 
-                                className="d-inline btn btn-success" to="/signin"
-                                onClick={() =>{changeLinkActive(true)}}
-                            >
-                                <i className="fas fa-sign-in-alt"></i> <span className="h6">Iniciar Sesión</span>
-                            </Link>
-                            <Link 
-                                className="d-inline btn btn-success ml-2" to="/signup"
-                                onClick={() =>{changeLinkActive(true)}}
-                            >
-                                <i className="fas fa-user-plus"></i> <span className="h6">Registrarse</span>
-                            </Link>
+                            {!isLogged ? 
+                                <Fragment>
+                                    <Link 
+                                        className="d-inline btn btn-success" to="/signin"
+                                        onClick={() =>{changeLinkActive(true)}}
+                                    >
+                                        <i className="fas fa-sign-in-alt"></i> <span className="h6">Iniciar Sesión</span>
+                                    </Link>
+                                    <Link 
+                                        className="d-inline btn btn-success ml-2" to="/signup"
+                                        onClick={() =>{changeLinkActive(true)}}
+                                    >
+                                        <i className="fas fa-user-plus"></i> <span className="h6">Registrarse</span>
+                                    </Link>   
+                                </Fragment> 
+                                :
+                                    <div id="userMenuContainer" className="dropdown">
+                                        <a 
+                                            className="btn btn-success dropdown-toggle"
+                                            href="#!" 
+                                            role="button" 
+                                            id="userButton" 
+                                            onClick={onHandleClickShowUser}
+                                        >
+                                            <i className="fas fa-user"></i> <span className="h6">{name}</span>
+                                        </a>
+                                        <div id="userMenu" className="dropdown-menu">
+                                            <Link 
+                                                className="dropdown-item" to="/groups"
+                                                onClick={onHandleClickLinkMenu}
+                                            >
+                                                <i className="fas fa-users"></i> <span className="h6">Grupos</span>
+                                            </Link> 
+                                            <Link 
+                                                className="dropdown-item" to="/tests"
+                                                onClick={onHandleClickLinkMenu}
+                                            >
+                                                <i className="fas fa-diagnoses"></i> <span className="h6">Exámenes</span>
+                                            </Link> 
+                                            <div className="dropdown-divider"></div>
+                                            <Link 
+                                                className="dropdown-item text-danger" to="/tests"
+                                                onClick={onHandleClickLinkMenu}
+                                            >
+                                                <i className="fas fa-sign-out-alt"></i> <span className="h6">Cerrar sesión</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                            }
                         </div>
                     </div>
                 </nav>

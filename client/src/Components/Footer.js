@@ -7,9 +7,9 @@ const FooterContainer = styled.footer`
     padding: 20px 60px;
 `;
 
-const Footer = ({property}) => {
+const Footer = () => {
     return (
-        <FooterContainer className={`bg-primary text-white ${property}`}>
+        <FooterContainer className="bg-primary text-white">
             &copy; Estructuras de datos Online Derechos reservados 2020
         </FooterContainer>
     );

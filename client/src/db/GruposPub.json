@@ -1,0 +1,50 @@
+[
+    {
+        "_id": "2",
+        "code": "codegroup2",
+        "groupName": "Grupo 2",
+        "public": true
+    },
+    {
+        "_id": "3",
+        "code": "codegroup3",
+        "groupName": "Grupo 3",
+        "public": true
+    },
+    {
+        "_id": "4",
+        "code": "codegroup4",
+        "groupName": "Grupo 4",
+        "public": true
+    },
+    {
+        "_id": "5",
+        "code": "codegroup5",
+        "groupName": "Grupo 5",
+        "public": true
+    },
+    {
+        "_id": "7",
+        "code": "codegroup7",
+        "groupName": "Grupo 7",
+        "public": false
+    },
+    {
+        "_id": "8",
+        "code": "codegroup8",
+        "groupName": "Grupo 8",
+        "public": false
+    },
+    {
+        "_id": "9",
+        "code": "codegroup9",
+        "groupName": "Grupo 9",
+        "public": false
+    },
+    {
+        "_id": "10",
+        "code": "codegroup10",
+        "groupName": "Grupo 10",
+        "public": false
+    }
+]
