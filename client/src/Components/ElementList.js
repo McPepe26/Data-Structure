@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useSpring, animated} from 'react-spring';
+import { Link } from 'react-router-dom';
 
 const CardContainer = styled.div`
     max-width: 100%;
@@ -28,13 +29,21 @@ const Element = ({content, dataElement}) => {
                         }
                         <div className="col-4">
                             {buttons.map((buttonInfo) => (
-                                <button 
-                                    key={buttonInfo.text}
-                                    name={dataElement.code}
-                                    type="button" 
-                                    onClick={buttonInfo.action}
-                                    className={`btn ${buttonInfo.style} mr-1 ${buttons.length > 1 ? '': 'btn-block'}`}
-                                >{buttonInfo.text}</button>
+                                !buttonInfo.isLink ?
+                                    <button 
+                                        key={buttonInfo.text}
+                                        name={dataElement._id}
+                                        type="button" 
+                                        onClick={buttonInfo.action}
+                                        className={`btn ${buttonInfo.style} mr-1 ${buttons.length > 1 ? '': 'btn-block'}`}
+                                    >{buttonInfo.text}</button>
+                                    :
+                                    <Link 
+                                        key={buttonInfo.text}
+                                        name={dataElement._id}
+                                        to={`/editTest/${dataElement._id}`}
+                                        className={`btn ${buttonInfo.style} mr-1 ${buttons.length > 1 ? '': 'btn-block'}`}
+                                    >{buttonInfo.text}</Link>
                             ))}
                         </div>
                     </div>

@@ -4,7 +4,8 @@ import {
     OUT_GROUP,
     SET_OUT,
     SELECT_LIST,
-    SET_NEW
+    SET_NEW,
+    LOAD_GROUPS
 } from '../../Types/Group';
 
 export default (state, action) => {
@@ -49,6 +50,13 @@ export default (state, action) => {
                 allgroups: action.payload.all,
                 publicGroups: action.payload.public,
                 userGroups: [...state.userGroups, action.payload.group]
+            }
+        case LOAD_GROUPS:
+            return {
+                ...state,
+                allgroups: action.payload.publicGroupsList,
+                publicGroups: action.payload.publicGroupsList.filter((group) => group.public === true),
+                userGroups: action.payload.userGroupsList,
             }
         default:
             return state;

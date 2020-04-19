@@ -58,15 +58,15 @@ const List = ({content}) => {
                             className="col-10 mx-auto mt-2"
                         >
                             {data.length > 0 ? 
-                                data.map((element) => (
-                                    <Element
-                                        key={element._id}
-                                        content = {content}
-                                        dataElement = {element}
-                                    />
-                                ))
+                                data.map((element) => {
+                                    return <Element
+                                            key={element._id}
+                                            content = {content}
+                                            dataElement = {element}
+                                        />
+                                })
                                 :
-                                <p className="display-4 mt-2 lead text-white text-center"> No hay grupos que mostrar </p>
+                                <p className="display-4 mt-2 lead text-white text-center"> No hay elementos que mostrar </p>
                             }
                         </div>
                         

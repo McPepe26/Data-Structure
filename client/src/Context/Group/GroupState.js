@@ -9,14 +9,15 @@ import {
     OUT_GROUP,
     SET_OUT,
     SELECT_LIST,
-    SET_NEW
+    SET_NEW,
+    LOAD_GROUPS
 } from '../../Types/Group';
 
 const GroupState = (props) => {
     const initialState = {
-        allgroups: publicGroupsList,
-        publicGroups: publicGroupsList.filter((group) => group.public === true),
-        userGroups: userGroupsList,
+        allgroups: [],
+        publicGroups: [],
+        userGroups: [],
         foundGroup: null,
         outAction: false,
         list: null
@@ -25,6 +26,19 @@ const GroupState = (props) => {
     const [state, dispatch] = useReducer(GroupReducer, initialState);
 
     //Fn's
+    const loadGroups = (user) => {
+        //Consulta a la api
+        setTimeout(() => {
+            dispatch({
+                type:LOAD_GROUPS,
+                payload: {
+                    publicGroupsList,
+                    userGroupsList
+                }
+            })
+        }, 2000);
+    }
+
     const consulthGroup = (code) => {
         //Consulta a la api
         return new Promise((resolve, reject) => {
@@ -131,7 +145,8 @@ const GroupState = (props) => {
                 outGroup,
                 setOut,
                 searchGroupByName,
-                setNewGroup
+                setNewGroup,
+                loadGroups
             }}
         >
             {props.children}

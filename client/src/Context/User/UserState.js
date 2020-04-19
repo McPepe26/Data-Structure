@@ -4,11 +4,11 @@ import UserContext from './UserContext';
 
 const UserState = (props) => {
     const initialState = {
-        isLogged: true,
+        isLogged: false,
         user: {
             name: 'Pepe',
             edad: '20',
-            rol: 'teacher',
+            rol: 'student',
             school: 'UPT'
         }
     }

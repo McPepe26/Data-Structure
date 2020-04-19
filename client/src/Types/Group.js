@@ -4,3 +4,4 @@ export const OUT_GROUP = "OUT_GROUP";
 export const SET_OUT = "SET_OUT";
 export const SELECT_LIST = "SELECT_LIST";
 export const SET_NEW = "SET_NEW";
+export const LOAD_GROUPS = "LOAD_GROUPS";

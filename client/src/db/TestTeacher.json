@@ -1,0 +1,119 @@
+[
+    {
+        "_id": "1",
+        "nameTest": "Test 1",
+        "doIt": false,
+        "dateIn": {
+            "year": 2020,
+            "month": 4,
+            "day": 16
+        },
+        "dateOut": {
+            "year": 2020,
+            "month": 4,
+            "day": 16
+        },
+        "hourIn": "16:00:00",
+        "hourOut": "18:00:00",
+        "time":{
+            "number": 4,
+            "type": "h"
+        },
+        "questionList": [
+            {
+                "question": "Pregunta 1",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 2",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 3",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 4",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            }
+        ]
+    },
+    {
+        "_id": "2",
+        "nameTest": "Test 2",
+        "doIt": false,
+        "dateIn": {
+            "year": 2020,
+            "month": 4,
+            "day": 16
+        },
+        "dateOut": {
+            "year": 2020,
+            "month": 4,
+            "day": 20
+        },
+        "hourIn": "16:00:00",
+        "hourOut": "18:00:00",
+        "time":{
+            "number": 2,
+            "type": "h"
+        },
+        "questionList": [
+            {
+                "question": "Pregunta 1",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 2",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 3",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 4",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            }
+        ]
+    },
+    {
+        "_id": "3",
+        "nameTest": "Test 3",
+        "doIt": false,
+        "dateIn": {
+            "year": 2020,
+            "month": 4,
+            "day": 16
+        },
+        "dateOut": {
+            "year": 2020,
+            "month": 4,
+            "day": 16
+        },
+        "hourIn": "16:00:00",
+        "hourOut": "18:00:00",
+        "time":{
+            "number": 1,
+            "type": "h"
+        },
+        "questionList": [
+            {
+                "question": "Pregunta 1",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 2",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 3",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            },
+            {
+                "question": "Pregunta 4",
+                "answerList": ["Respuesta 1", "Respuesta 2", "Respuesta 3"]
+            }
+        ]
+    }
+]

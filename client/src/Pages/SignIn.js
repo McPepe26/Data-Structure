@@ -3,7 +3,7 @@ import {useSpring, animated} from 'react-spring';
 import FormSignIn from '../Components/FormSignIn';
 import { calcPositionFooter } from '../Helpers/FooterHelpers';
 
-const SignIn = ({setProperty, signin, history}) => {
+const SignIn = ({signin, history}) => {
     const props = useSpring({opacity: 1, from: {opacity: 0}});
 
     useEffect(() => {

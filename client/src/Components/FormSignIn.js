@@ -5,7 +5,7 @@ const CardContainer = styled.div`
     max-width: 60%;
 `;
 
-const FormSignIn = ({signin, history}) => {
+const FormSignIn = ({history}) => {
     const [user, setUser] = useState({
         user: '',
         password: ''

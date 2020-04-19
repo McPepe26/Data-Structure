@@ -7,12 +7,15 @@ import NavBar from './Components/NavBar';
 import Themes from './Pages/Themes';
 import SignUp from './Pages/SignUp';
 import Footer from './Components/Footer';
-import UserState from './Context/User/UserState';
 import Gropus from './Pages/Groups';
 import Tests from './Pages/Tests';
 import ThemeState from './Context/Theme/ThemeState';
+import UserState from './Context/User/UserState';
+import TestState from './Context/Test/TestState';
 import { calcPositionFooter } from './Helpers/FooterHelpers';
 import GroupState from './Context/Group/GroupState';
+import NewTest from './Pages/NewTest';
+import DoTest from './Pages/DoTest';
 
 function App() {
 	const [mainIsActive, setMainIsActive] = useState(true);
@@ -25,60 +28,90 @@ function App() {
 		<UserState>
 			<ThemeState>
 				<GroupState>
-					<Router>
-						<NavBar
-							mainIsActive={mainIsActive}
-							setMainIsActive={setMainIsActive}
-						/>
-						<Switch>
-							<Route exact path="/" 
-								render={(props) => 
-									<MainPage
-										{...props}
-										setMainIsActive={setMainIsActive}
-									/>
-								}
+					<TestState>
+						<Router>
+							<NavBar
+								mainIsActive={mainIsActive}
+								setMainIsActive={setMainIsActive}
 							/>
-							<Route exact path="/themes" 
-								render={(props) => 
-									<Themes
-										{...props}
-										setMainIsActive={setMainIsActive}
-									/>
-								}
-							/>
-							<Route exact path="/signin"
-								render={(props) =>
-									<SignIn
-										{...props}
-									/>
-								}
-							/>
-							<Route exact path="/signup"
-								render={(props) => (
-									<SignUp
-										{...props}
-									/>
-								)}
-							/>
-							<Route exact path="/groups"
-								render={(props) => (
-									<Gropus
-										{...props}
-									/>
-								)}
-							/>
-							<Route exact path="/tests"
-								render={(props) => (
-									<Tests
-										{...props}
-									/>
-								)}
-							/>
-							<Route component={NotFound}/>
-						</Switch>
-						<Footer/>
-					</Router>
+							<Switch>
+								<Route exact path="/" 
+									render={(props) => 
+										<MainPage
+											{...props}
+											setMainIsActive={setMainIsActive}
+										/>
+									}
+								/>
+								<Route exact path="/themes" 
+									render={(props) => 
+										<Themes
+											{...props}
+											setMainIsActive={setMainIsActive}
+										/>
+									}
+								/>
+								<Route exact path="/signin"
+									render={(props) =>
+										<SignIn
+											{...props}
+										/>
+									}
+								/>
+								<Route exact path="/signup"
+									render={(props) => (
+										<SignUp
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/groups"
+									render={(props) => (
+										<Gropus
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/tests"
+									render={(props) => (
+										<Tests
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/createTest"
+									render={(props) => (
+										<NewTest
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/editTest/:id"
+									render={(props) => (
+										<NewTest
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/showtest/:id"
+									render={(props) => (
+										<NewTest
+											{...props}
+										/>
+									)}
+								/>
+								<Route exact path="/dotest/:id"
+									render={(props) => (
+										<DoTest
+											{...props}
+										/>
+									)}
+								/>
+								<Route component={NotFound}/>
+							</Switch>
+							<Footer/>
+						</Router>
+					</TestState>
 				</GroupState>
 			</ThemeState>
 		</UserState>

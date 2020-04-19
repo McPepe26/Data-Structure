@@ -13,15 +13,11 @@ const FormNewGroup = () => {
                     placeholder="Ingresa tu correo electrónico"
                 />
             </div>
-            <div className="form-group text-left pl-4">
-                <input 
-                    className="form-check-input" 
-                    type="checkbox" 
-                    value=""
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                    Privado
-                </label>
+            <div className="form-group text-left">
+                <div className="custom-control custom-checkbox">
+                    <input type="checkbox" className="custom-control-input" id="public"/>
+                    <label className="custom-control-label" htmlFor="public">Privado</label>
+                </div>
             </div>
         </Fragment>
     );

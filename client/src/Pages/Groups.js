@@ -10,7 +10,7 @@ import FormNewGroup from '../Components/FormNewGroup';
 import { getGroupFromModal } from '../Helpers/GroupHelepers';
 
 const Gropus = () => {
-    const Swal = withReactContent(SwalCreate)
+    const Swal = withReactContent(SwalCreate);
 
     const props = useSpring({opacity: 1, from: {opacity: 0}});
 
