@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import SwalCreate from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const CardContainer = styled.div`
     max-width: 60%;
 `;
 
-const FormSignUp = ({history}) => {
+const FormSignUp = ({onSignUpUser}) => {
+    const Swal = withReactContent(SwalCreate);
     const [user, setUser] = useState({
         user: '',
         email: '',
@@ -18,8 +21,28 @@ const FormSignUp = ({history}) => {
 
     const login = (e) => {
         e.preventDefault();
-        console.log('login');
-        history.push('/themes');
+        if(user.user === '' ||
+            user.email === '' ||
+            user.password === '' ||
+            user.passwordConfirm === '' ||
+            user.date === '' ||
+            user.rol === '' ||
+            user.school === ''){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Todos los campos son requeridos'
+            });
+            return;
+        }else if(user.password !== user.passwordConfirm){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Las contraseñas no coincidens'
+            });
+            return;
+        }
+        onSignUpUser(user);
     }
 
     const handleChangeData = (e) => {

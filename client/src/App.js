@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainPage from './Pages/MainPage';
 import SignIn from './Pages/SignIn';
@@ -7,23 +7,22 @@ import NavBar from './Components/NavBar';
 import Themes from './Pages/Themes';
 import SignUp from './Pages/SignUp';
 import Footer from './Components/Footer';
-import Gropus from './Pages/Groups';
-import Tests from './Pages/Tests';
 import ThemeState from './Context/Theme/ThemeState';
 import UserState from './Context/User/UserState';
 import TestState from './Context/Test/TestState';
 import { calcPositionFooter } from './Helpers/FooterHelpers';
 import GroupState from './Context/Group/GroupState';
-import NewTest from './Pages/NewTest';
-import DoTest from './Pages/DoTest';
+import UserRoutes from './Components/Routes/UserRoutes';
 
 function App() {
 	const [mainIsActive, setMainIsActive] = useState(true);
+	const [isUserLog, setIsUserLog] = useState(false);
 
 	// eslint-disable-next-line
     useEffect(() => {
         calcPositionFooter();
 	});
+
 	return (
 		<UserState>
 			<ThemeState>
@@ -54,6 +53,7 @@ function App() {
 								<Route exact path="/signin"
 									render={(props) =>
 										<SignIn
+											setIsUserLog={setIsUserLog}
 											{...props}
 										/>
 									}
@@ -61,52 +61,18 @@ function App() {
 								<Route exact path="/signup"
 									render={(props) => (
 										<SignUp
+											setIsUserLog={setIsUserLog}
 											{...props}
 										/>
 									)}
 								/>
-								<Route exact path="/groups"
-									render={(props) => (
-										<Gropus
-											{...props}
-										/>
-									)}
-								/>
-								<Route exact path="/tests"
-									render={(props) => (
-										<Tests
-											{...props}
-										/>
-									)}
-								/>
-								<Route exact path="/createTest"
-									render={(props) => (
-										<NewTest
-											{...props}
-										/>
-									)}
-								/>
-								<Route exact path="/editTest/:id"
-									render={(props) => (
-										<NewTest
-											{...props}
-										/>
-									)}
-								/>
-								<Route exact path="/showtest/:id"
-									render={(props) => (
-										<NewTest
-											{...props}
-										/>
-									)}
-								/>
-								<Route exact path="/dotest/:id"
-									render={(props) => (
-										<DoTest
-											{...props}
-										/>
-									)}
-								/>
+								{isUserLog ? 
+									<UserRoutes
+										setIsUserLog={setIsUserLog}
+									/>
+									:
+									null
+								}
 								<Route component={NotFound}/>
 							</Switch>
 							<Footer/>

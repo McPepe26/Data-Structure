@@ -1,12 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {useSpring, animated} from 'react-spring'
 import Card from '../Components/Card';
 import Header from '../Components/Header';
+import { calcPositionFooter } from '../Helpers/FooterHelpers';
 
 
 const MainPage = ({setMainIsActive}) => {
     const props = useSpring({opacity: 1, from: {opacity: 0}});
+
+    useEffect(() => {
+        calcPositionFooter();
+    });
 
     return (
         <animated.div className="transition-class" style={props}>

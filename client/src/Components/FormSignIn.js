@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import SwalCreate from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const CardContainer = styled.div`
     max-width: 60%;
 `;
 
-const FormSignIn = ({history}) => {
+const FormSignIn = ({onLoginUser}) => {
+    const Swal = withReactContent(SwalCreate);
+    
     const [user, setUser] = useState({
         user: '',
         password: ''
@@ -13,8 +17,22 @@ const FormSignIn = ({history}) => {
 
     const login = (e) => {
         e.preventDefault();
-        console.log('login');
-        history.push('/themes');
+        if(user.user === ''){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Tu correo es necesario'
+            });
+            return;
+        }else if(user.password === ''){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'La contraseña es requerida'
+            });
+            return;
+        }
+        onLoginUser(user);
     }
 
     const handleChange = (e) => {
