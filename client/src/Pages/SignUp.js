@@ -1,11 +1,14 @@
 import React, {useEffect, useContext} from 'react';
 import {useSpring, animated} from 'react-spring';
+import SwalCreate from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import FormSignUp from '../Components/FormSignUp';
 import UserContext from '../Context/User/UserContext';
 import { calcPositionFooter } from '../Helpers/FooterHelpers';
 
 const SignUp = ({history, setIsUserLog}) => {
     const props = useSpring({opacity: 1, from: {opacity: 0}});
+    const Swal = withReactContent(SwalCreate);
 
     const userContext = useContext(UserContext);
     const { signUpUser } = userContext;
@@ -14,8 +17,16 @@ const SignUp = ({history, setIsUserLog}) => {
         calcPositionFooter();
     });
 
-    const onSignUpUser = (user) => {
-        signUpUser(user);
+    const onSignUpUser = async (user) => {
+        let message = await signUpUser(user);
+        if(message){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: message
+            });
+            return;
+        }
         setIsUserLog(true);
         history.push('/groups');
     }

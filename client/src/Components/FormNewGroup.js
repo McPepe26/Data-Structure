@@ -10,7 +10,7 @@ const FormNewGroup = () => {
                     className="form-control" 
                     name="groupName"
                     id="groupName"
-                    placeholder="Ingresa tu correo electrónico"
+                    placeholder="Ingresa el nombre del grupo"
                 />
             </div>
             <div className="form-group text-left">

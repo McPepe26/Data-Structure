@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import UserContext from '../../Context/User/UserContext';
 import NewTest from '../../Pages/NewTest';
 import DoTest from '../../Pages/DoTest';
@@ -8,11 +8,21 @@ import { Route, Redirect } from 'react-router-dom';
 
 const UserRoutes = ({setIsUserLog}) => {
 	const userContext = useContext(UserContext);
-    const { isLogged } = userContext;
+    const { isLogged, loginUserToken } = userContext;
+    
+    useEffect(() => {
+        const checkTokenUser = async () => {
+            let message = await loginUserToken();
+            if(!message){
+                setIsUserLog(true);
+            }
+        }
+        checkTokenUser();
+    }, [])
 
     if(!isLogged){
         setIsUserLog(isLogged);
-        return <Redirect to="/404" />;
+        return <Redirect to="/" />;
     }
 
     return(

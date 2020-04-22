@@ -7,8 +7,10 @@ const NavBar = ({mainIsActive, setMainIsActive}) => {
 
     //User Context 
     const userContext = useContext(UserContext);
-    const { isLogged, user } = userContext;
+    const { isLogged, user, signOut } = userContext;
     const { name } = user;
+
+    
 
     const changeLinkActive = (isMain) => {
         setMainIsActive(isMain);
@@ -22,6 +24,11 @@ const NavBar = ({mainIsActive, setMainIsActive}) => {
         menu.classList.toggle('show');
         container.classList.toggle('show');
         button.blur();
+    }
+
+    const onHandleClickSignOut = (e) =>{
+        e.preventDefault();
+        signOut();
     }
 
     //CLick on user button
@@ -95,12 +102,12 @@ const NavBar = ({mainIsActive, setMainIsActive}) => {
                                                 <i className="fas fa-diagnoses"></i> <span className="h6">Exámenes</span>
                                             </Link> 
                                             <div className="dropdown-divider"></div>
-                                            <Link 
+                                            <button 
                                                 className="dropdown-item text-danger" to="/tests"
-                                                onClick={onHandleClickLinkMenu}
+                                                onClick={onHandleClickSignOut}
                                             >
                                                 <i className="fas fa-sign-out-alt"></i> <span className="h6">Cerrar sesión</span>
-                                            </Link>
+                                            </button>
                                         </div>
                                     </div>
                             }

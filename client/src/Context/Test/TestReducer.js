@@ -5,7 +5,7 @@ import {
     DELETE_TEST,
     SET_DOING_TEST,
     SET_ANSWER_USER
-} from '../../Types/Test';
+} from '../Types/Test';
 
 export default (state, action) => {
     switch (action.type) {

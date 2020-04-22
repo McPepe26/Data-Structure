@@ -10,7 +10,7 @@ const CardContainer = styled.div`
 const FormSignUp = ({onSignUpUser}) => {
     const Swal = withReactContent(SwalCreate);
     const [user, setUser] = useState({
-        user: '',
+        name: '',
         email: '',
         password: '',
         passwordConfirm: '',
@@ -21,7 +21,7 @@ const FormSignUp = ({onSignUpUser}) => {
 
     const login = (e) => {
         e.preventDefault();
-        if(user.user === '' ||
+        if(user.name === '' ||
             user.email === '' ||
             user.password === '' ||
             user.passwordConfirm === '' ||
@@ -94,12 +94,12 @@ const FormSignUp = ({onSignUpUser}) => {
                         />
                     </div>
                     <div className="form-group text-left">
-                        <label htmlFor="user">Nombre</label>
+                        <label htmlFor="name">Nombre</label>
                         <input 
                             type="text" 
                             className="form-control" 
-                            name="user" 
-                            id="user"
+                            name="name" 
+                            id="name"
                             placeholder="Ingresa tu nombre"
                             onChange={handleChangeData}
                         />

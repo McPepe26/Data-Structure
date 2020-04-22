@@ -5,8 +5,9 @@ import {
     SET_OUT,
     SELECT_LIST,
     SET_NEW,
-    LOAD_GROUPS
-} from '../../Types/Group';
+    LOAD_GROUPS,
+    DELETE_GROUP
+} from '../Types/Group';
 
 export default (state, action) => {
     switch (action.type) {
@@ -47,7 +48,6 @@ export default (state, action) => {
         case SET_NEW:
             return {
                 ...state,
-                allgroups: action.payload.all,
                 publicGroups: action.payload.public,
                 userGroups: [...state.userGroups, action.payload.group]
             }
@@ -57,6 +57,16 @@ export default (state, action) => {
                 allgroups: action.payload.publicGroupsList,
                 publicGroups: action.payload.publicGroupsList.filter((group) => group.public === true),
                 userGroups: action.payload.userGroupsList,
+            }
+        case DELETE_GROUP:
+            let list= state.publicGroups;
+            if(action.payload.public){
+                list = state.publicGroups.filter((group) => group._id !== action.payload._id);
+            }
+            return {
+                ...state,
+                userGroups: state.userGroups.filter((group) => group._id !== action.payload._id),
+                publicGroups: list
             }
         default:
             return state;

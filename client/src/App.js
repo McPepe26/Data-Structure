@@ -16,7 +16,7 @@ import UserRoutes from './Components/Routes/UserRoutes';
 
 function App() {
 	const [mainIsActive, setMainIsActive] = useState(true);
-	const [isUserLog, setIsUserLog] = useState(false);
+	const [isUserLog, setIsUserLog] = useState(true);
 
 	// eslint-disable-next-line
     useEffect(() => {

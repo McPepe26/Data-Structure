@@ -36,7 +36,7 @@ const Accordion = ({data, deleteQuestion, editQuestion}) => {
                                 <div className="row">
                                     <div className="col-8">
                                         <ul className="list-group">
-                                            {question.listAnswer.map((answer) => (
+                                            {question.answerList.map((answer) => (
                                                 <li 
                                                     className="list-group-item"
                                                     key={answer._id}

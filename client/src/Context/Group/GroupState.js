@@ -3,6 +3,7 @@ import GroupReducer from './GroupReducer';
 import GroupContext from './GroupContext';
 import publicGroupsList from '../../db/GruposPub.json';
 import userGroupsList from '../../db/GruposUsuario.json';
+import { clientAxios, tokenAuth } from '../../Helpers/AuthHelpers';
 import {
     SEARCH_GROUP,
     ADD_GROUP,
@@ -10,8 +11,9 @@ import {
     SET_OUT,
     SELECT_LIST,
     SET_NEW,
-    LOAD_GROUPS
-} from '../../Types/Group';
+    LOAD_GROUPS,
+    DELETE_GROUP
+} from '../Types/Group';
 
 const GroupState = (props) => {
     const initialState = {
@@ -26,17 +28,41 @@ const GroupState = (props) => {
     const [state, dispatch] = useReducer(GroupReducer, initialState);
 
     //Fn's
-    const loadGroups = (user) => {
+    const loadGroups = async () => {
         //Consulta a la api
-        setTimeout(() => {
-            dispatch({
-                type:LOAD_GROUPS,
-                payload: {
-                    publicGroupsList,
-                    userGroupsList
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return 'No estas autenticado, intenta iniciar sesión de nuevo';
+            }
+
+            const response = await clientAxios.get('/api/group/', headers);
+            const { data } = response;
+            if(data.ok){        
+                dispatch({
+                    type:LOAD_GROUPS,
+                    payload: {
+                        publicGroupsList: data.groupListPublic,
+                        userGroupsList: data.groupList
+                    }
+                })
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
                 }
-            })
-        }, 2000);
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
     }
 
     const consulthGroup = (code) => {
@@ -114,21 +140,78 @@ const GroupState = (props) => {
         });
     }
 
-    const setNewGroup = (group) => {
-        console.log(group);
-        //Se manda a la api y regresa la lista completa
-        group._id = state.allgroups.length + 1;
-        group.code = `codegroupnew${group._id}`;
-        let listUpdated = [...state.allgroups, group];
-        let listPublicUpdated = group.public ? [...state.publicGroups, group] : state.publicGroups;
-        dispatch({
-            type: SET_NEW,
-            payload: {
-                all: listUpdated,
-                public: listPublicUpdated,
-                group
+    const deleteGroup = async (id) => {
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
             }
-        })
+
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return 'No estas autenticado, intenta iniciar sesión de nuevo';
+            }
+
+            const response = await clientAxios.delete(`/api/group/${id}`, headers);
+            const { data } = response;
+            if(data.ok){        
+                dispatch({
+                    type: DELETE_GROUP,
+                    payload: data.groupDelete
+                });
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
+    }
+
+    const setNewGroup = async (group) => {
+        //Se manda a la api y regresa la lista completa
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return 'No estas autenticado, intenta iniciar sesión de nuevo';
+            }
+
+            const response = await clientAxios.post('/api/group/create', group, headers);
+            const { data } = response;
+            if(data.ok){
+                let listPublicUpdated = group.public ? [...state.publicGroups, data.group] : state.publicGroups;
+        
+                dispatch({
+                    type: SET_NEW,
+                    payload: {
+                        public: listPublicUpdated,
+                        group: data.group
+                    }
+                });
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+            
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
+        
     }
 
     return(
@@ -146,7 +229,8 @@ const GroupState = (props) => {
                 setOut,
                 searchGroupByName,
                 setNewGroup,
-                loadGroups
+                loadGroups,
+                deleteGroup
             }}
         >
             {props.children}

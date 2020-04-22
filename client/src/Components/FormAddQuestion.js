@@ -12,13 +12,13 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
         _id:'',
         question: '',
         isEditing: false,
-        listAnswer: []
+        answerList: []
     }
 
     const [questionState, setQuestion] = useState(questionEdit ? questionEdit : initialState);
     const [createAnswer, setCreateAnswer] = useState(false);
 
-    const { question, listAnswer } = questionState;
+    const { question, answerList } = questionState;
 
     const addQuestion = (answer) => {
         if(answer !== ''){
@@ -29,7 +29,7 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
             }
             setQuestion({
                 ...questionState,
-                listAnswer: [...listAnswer, object]
+                answerList: [...answerList, object]
             });
             setCreateAnswer(false);
         }else{
@@ -46,23 +46,23 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
     }
 
     const selectCorrect = (id) => {
-        let newList = listAnswer.filter((answer) => {
+        let newList = answerList.filter((answer) => {
             answer.isCorrect = false;
             return answer._id !== id;
         });
-        let answerCorrect = listAnswer.filter((answer) => answer._id === id)[0];
+        let answerCorrect = answerList.filter((answer) => answer._id === id)[0];
         answerCorrect.isCorrect = true;
         setQuestion({
             ...questionState,
-            listAnswer: [answerCorrect, ...newList]
+            answerList: [answerCorrect, ...newList]
         });
     }
 
     const deleteAnswer = (id) => {
-        let newList = listAnswer.filter((answer) => answer._id !== id);
+        let newList = answerList.filter((answer) => answer._id !== id);
         setQuestion({
             ...questionState,
-            listAnswer: newList
+            answerList: newList
         });
     }
 
@@ -77,7 +77,7 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
     const onHandleClickAddQuestion = (e) => {
         e.preventDefault();
 
-        let correctAnswer = listAnswer.filter((answer) => answer.isCorrect)[0];
+        let correctAnswer = answerList.filter((answer) => answer.isCorrect)[0];
 
         if(question === ''){
             Swal.fire({
@@ -86,7 +86,7 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
                 text: 'La pregunta es requerida'
             });
             return;
-        }else if(listAnswer.length <= 0){
+        }else if(answerList.length <= 0){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -107,7 +107,7 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
         setQuestion({
             _id:'',
             question: '',
-            listAnswer: []
+            answerList: []
         })
     }
 
@@ -134,7 +134,7 @@ const FormAddQuestion = ({addQuestionToList, questionEdit, cancelEditOrCreate}) 
                     />
                 </div>
                 <ListAnswer
-                    listAnswer={listAnswer}
+                    listAnswer={answerList}
                     selectCorrect={selectCorrect}
                     deleteAnswer={deleteAnswer}
                 />

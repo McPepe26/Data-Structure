@@ -1,7 +1,7 @@
 import {
     SELECT_THEME,
     LOADING
-} from '../../Types/Theme';
+} from '../Types/Theme';
 
 export default (state, action) => {
     switch (action.type) {

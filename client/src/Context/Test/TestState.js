@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react';
 import TestReducer from './TestReducer';
 import TestContext from './TestContext';
-import ListTest from '../../db/TestTeacher.json'
+import ListTest from '../../db/TestTeacher.json';
+import { clientAxios, tokenAuth, tokenExists } from '../../Helpers/AuthHelpers';
 import {
     SET_LIST_TEST,
     SET_NEW_TEST,
@@ -9,12 +10,12 @@ import {
     DELETE_TEST,
     SET_DOING_TEST,
     SET_ANSWER_USER
-} from '../../Types/Test';
+} from '../Types/Test';
 
 const TestState = (props) => {
     let today = new Date();
     const initialState = {
-        testList: ListTest,
+        testList: [],
         answerList: [],
         isLoading: true,
         activeTest: {
@@ -44,11 +45,35 @@ const TestState = (props) => {
     const [state, dispatch] = useReducer(TestReducer, initialState);
 
     //Fn's
-    const consultTest = () => {
-        dispatch({
-            type: SET_LIST_TEST,
-            payload: ListTest
-        })
+    const consultTest = async () => {
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return;
+            }
+            const response = await clientAxios.get('/api/test/teacher', headers);
+            const { data } = response;
+            if(data.ok){
+                dispatch({
+                    type: SET_LIST_TEST,
+                    payload: data.testList
+                });
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
     }
 
     const setDoingTest = (id) => {
@@ -60,12 +85,37 @@ const TestState = (props) => {
         })
     }
 
-    const setNewTest = (test) => {
+    const setNewTest = async (test) => {
         //Se manda a la api
-        dispatch({
-            type: SET_NEW_TEST,
-            payload: test
-        })
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return;
+            }
+            const response = await clientAxios.post('/api/test/create', test, headers);
+            const { data } = response;
+            console.log(data)
+            if(data.ok){
+                dispatch({
+                    type: SET_NEW_TEST,
+                    payload: data.test
+                })
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
     }
 
     const setEditTest = (id) => {
@@ -76,20 +126,69 @@ const TestState = (props) => {
         return test;
     }
 
-    const saveEditTest = (test) => {
+    const saveEditTest = async (test) => {
         //Se manda a la api
-        dispatch({
-            type: SET_EDIT_TEST,
-            payload: test
-        })
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return;
+            }
+            const response = await clientAxios.put('/api/test/edit', test, headers);
+            const { data } = response;
+            if(data.ok){
+                dispatch({
+                    type: SET_EDIT_TEST,
+                    payload: data.test
+                })
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
     }
 
-    const deleteTest = (id) => {
+    const deleteTest = async (id) => {
         //Se manda a la api
-        dispatch({
-            type:DELETE_TEST,
-            payload: id
-        })
+        try{
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            let token = localStorage.getItem('token');
+            if(token){
+                tokenAuth(token);
+            }else{
+                return;
+            }
+            const response = await clientAxios.delete(`/api/test/${id}`, headers);
+            const { data } = response;
+            if(data.ok){
+                dispatch({
+                    type:DELETE_TEST,
+                    payload: data.test._id
+                });
+            }else{
+                if(data.err)
+                    return data.err.message;
+                else if(data.error){
+                    return data.error.message.split(':')[2];
+                }
+            }
+        }catch(err){
+            console.log(err);
+            return 'Ha ocurrido un error en el servidor';
+        }
+        
     }
 
     const setAnswerUserList = (answerList) => {

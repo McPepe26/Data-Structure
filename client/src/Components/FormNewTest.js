@@ -45,7 +45,7 @@ const FormNewTest = ({history}) => {
     }
     const { groupId, nameTest, dateIn, dateOut, hourIn, hourOut, time, questionList} = test;
 
-    const onHandleClickSaveTest = (e) => {
+    const onHandleClickSaveTest = async (e) => {
         e.preventDefault();
         let legend, error;
         if(nameTest === ''){
@@ -70,13 +70,33 @@ const FormNewTest = ({history}) => {
         }
 
         test.questionList = questionList;
+        test.questionList.forEach((question) => {
+            delete question._id;
+            question.answerList.forEach((answer) => {
+                delete answer._id;
+            })
+        })
         if(test.isEditing){
             legend = 'Se ha editado el exámen';
-            saveEditTest(test);
-            console.log(saveEditTest);
+            let message = await saveEditTest(test);
+            if(message){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: message
+                });
+                return;
+            }
         }else{
-            test._id = uuidv4();
-            setNewTest(test);
+            let message = await setNewTest(test);
+            if(message){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: message
+                });
+                return;
+            }
             legend = 'Se ha agregado el exámen';
         }
         history.push('/tests');
@@ -125,7 +145,7 @@ const FormNewTest = ({history}) => {
             let newList = questionList.filter((questionSave) => {
                 if(questionSave._id === question._id){
                     questionSave.question = question.question;
-                    questionSave.listAnswer = question.listAnswer;
+                    questionSave.answerList = question.answerList;
                     questionSave.isEditing = false;
                 }
                 return true;

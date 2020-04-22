@@ -5,7 +5,7 @@ import themesData from '../../db/Temas.json';
 import {
     SELECT_THEME,
     LOADING
-} from '../../Types/Theme';
+} from '../Types/Theme';
 
 const ThemeState = (props) => {
     const intialState = {

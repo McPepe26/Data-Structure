@@ -22,7 +22,7 @@ const Gropus = () => {
     const groupContext = useContext(GroupContext);
     const { publicGroups, userGroups, foundGroup, consulthGroup, 
             addGroup, searchGroup, outAction, outGroup, setOut, 
-            searchGroupByName, list, setNewGroup } = groupContext;
+            searchGroupByName, list, setNewGroup, loadGroups, deleteGroup } = groupContext;
 
     useEffect(() => {
         if(foundGroup){
@@ -48,13 +48,33 @@ const Gropus = () => {
         }
     }, [foundGroup]);
 
+    useEffect(() => {
+        loadGroups();
+    }, []);
+
     const onHandleClickEnterGroup = (e) => {
         searchGroup(e.target.name);
     }
 
-    const onHandleClickOutGroup = (e) => {
-        setOut(true);
-        searchGroup(e.target.name, true);
+    const onHandleClickOutGroup = async (e) => {
+        let message = await deleteGroup(e.target.name);
+        if(message){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: message,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }else{
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se eliminado el grupo',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
     }
 
     const onHandleClickAddGroup = () => {
@@ -97,13 +117,30 @@ const Gropus = () => {
             showCancelButton: true,
             confirmButtonText: 'Crear',
             showLoaderOnConfirm: true,
-            preConfirm: () => {
+            preConfirm: async () => {
                 let group = getGroupFromModal();
                 if(group.groupName === ""){
                     Swal.showValidationMessage("El nombre del grupo es requerido");
                     return;
                 }
-                setNewGroup(group);
+                let message = await setNewGroup(group);
+                if(message){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }else{
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Se creado el grupo',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
             },
             allowOutsideClick: () => !Swal.isLoading()
         };

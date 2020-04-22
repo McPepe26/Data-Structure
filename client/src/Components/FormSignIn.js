@@ -11,13 +11,13 @@ const FormSignIn = ({onLoginUser}) => {
     const Swal = withReactContent(SwalCreate);
     
     const [user, setUser] = useState({
-        user: '',
+        email: '',
         password: ''
     });
 
     const login = (e) => {
         e.preventDefault();
-        if(user.user === ''){
+        if(user.email === ''){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -56,7 +56,7 @@ const FormSignIn = ({onLoginUser}) => {
                         <input 
                             type="email" 
                             className="form-control" 
-                            name="user" 
+                            name="email" 
                             id="email"
                             placeholder="Ingresa tu correo electrónico"
                             onChange={handleChange}

@@ -21,7 +21,7 @@ const Tests = ({history}) => {
     const testContext = useContext(TestContext);
     const { testList, consultTest, setEditTest, deleteTest } = testContext;
     useEffect(() => {
-        // consultTest();
+        consultTest();
     }, []);
 
     // eslint-disable-next-line
@@ -29,10 +29,17 @@ const Tests = ({history}) => {
         calcPositionFooter();
     });
     
-    const onDeleteTest = (e) => {
+    const onDeleteTest = async (e) => {
         e.preventDefault();
-        console.log(e.target.name)
-        deleteTest(e.target.name);
+        let message = await deleteTest(e.target.name);
+        if(message){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: message
+            });
+            return;
+        }
         Swal.fire({
             position: 'top-end',
             icon: 'success',
